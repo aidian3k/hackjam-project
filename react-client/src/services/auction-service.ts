@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const baseUrl = process.env.baseUrl;
+const baseUrl = process.env.BASE_BACKEND_URL ? process.env.BASE_BACKEND_URL : '';
 
-async function generateAuctionDetails() {
-  axios.get('http://localhost:8080/auction', {});
+async function generateAuctionDetails(data: FormData) {
+  return await axios.post(baseUrl, data).then(response => response.data);
 }
+
+export { generateAuctionDetails };
