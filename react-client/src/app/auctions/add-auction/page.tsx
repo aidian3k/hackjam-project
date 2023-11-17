@@ -15,6 +15,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { generateAuctionDetails } from "@/services/auction-service";
 
 export default function AddAuction() {
   const [file, setFile] = useState<File | null>(null);
@@ -41,13 +42,15 @@ export default function AddAuction() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const formData = new FormData();
+    console.log(file, startDate, endDate, localization);
+    const formData: FormData = new FormData();
     if (!file || !startDate || !endDate) return;
     formData.append("image", file);
     formData.append("startDate", startDate.toISOString());
     formData.append("endDate", endDate.toISOString());
     formData.append("localization", localization);
+
+    generateAuctionDetails(formData).then((response) => console.log(response));
   };
 
   return (
