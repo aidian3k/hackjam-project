@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export default function ProductInfo() {
   return (
-    <Paper elevation={2} sx={{ p: 2 }}>
+    <Paper elevation={2}  sx={{ p: 2, height: '100%' }}>
       <Box
         display={"flex"}
         gap={1}
         alignItems={"center"}
         justifyContent={"end"}
-        mb={2}
+        m={2}
       >
         <Typography textAlign={"center"} variant={"body2"}>
           Mike Perry
