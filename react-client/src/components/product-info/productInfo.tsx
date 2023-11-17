@@ -1,0 +1,52 @@
+import { Box, Paper, Typography } from "@mui/material";
+import Image from "next/image";
+
+export default function ProductInfo() {
+  return (
+    <Paper elevation={2} sx={{ p: 2 }}>
+      <Box
+        display={"flex"}
+        gap={1}
+        alignItems={"center"}
+        justifyContent={"end"}
+        mb={2}
+      >
+        <Typography textAlign={"center"} variant={"body2"}>
+          Mike Perry
+        </Typography>
+        <Image
+          src={"/img/avatar.jpg"}
+          alt={"user"}
+          width={20}
+          height={20}
+          style={{ borderRadius: 20 }}
+        />
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Image
+          src={"/img/product_img.jpg"}
+          alt={"product"}
+          width={80}
+          height={80}
+          style={{ borderRadius: 40 }}
+        />
+      </Box>
+      <Box>
+        <Typography
+          textAlign={"center"}
+          fontWeight={"bold"}
+          variant={"h6"}
+          mt={2}
+          mb={1}
+        >
+          Chair
+        </Typography>
+        <Typography variant={"body1"}>
+          The Nimbus boasts a sleek and modern design, with its gracefully
+          curved armrests and minimalist silhouette. The frame, constructed from
+          durable yet lightweight materials, ensures.
+        </Typography>
+      </Box>
+    </Paper>
+  );
+}
