@@ -36,6 +36,7 @@ type AuctionCreationDto = {
 };
 
 type MainPageAuctionDto = {
+  id: number;
   imageUrl: string;
   title: string;
   description: string;

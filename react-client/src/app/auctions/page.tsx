@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {AuctionCard} from "@/components/auction-card/auctionCard";
+import {useRouter} from "next/navigation";
 
 export type Auction = {
     id: number,
@@ -48,6 +49,7 @@ const auctionsMock: Auction[] = [
 
 
 export default function Auctions() {
+    const router = useRouter();
     const [auctions, setAuctions] = useState<Auction[]>([]);
 
     useEffect(() => {
@@ -63,17 +65,24 @@ export default function Auctions() {
 
     }, []);
 
+    const handleAuctionCardClick = (auctionId: number) => {
+        router.push(`/auction/details/${auctionId}`);
+    };
+
+
     return (
         <Container component={"main"} sx={{ pt: 4 }}  >
             <div className={"grid grid-cols-2 gap-y-3 gap-x-8"}>
                 {auctions?.map((auction, index) => (
-                <AuctionCard
-                    key={index}
-                    title={auction.title}
-                    description={auction.description}
-                    imgUrl={auction.imageUrl}
-                    tags={auction.tags}
-                />
+                    <div className="copy_btn" onClick={() => handleAuctionCardClick(auction.id)}>
+                        <AuctionCard
+                            key={index}
+                            title={auction.title}
+                            description={auction.description}
+                            imgUrl={auction.imageUrl}
+                            tags={auction.tags}
+                        />
+                    </div>
                 ))}
             </div>
         </Container>

@@ -18,14 +18,14 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
     { name: "Monica Rose", price: 120 },
   ];
 
-  const auction = {
-    id: 1,
-    imageUrl: "/img/mocks/20231118_095333.jpg",
-    title: "Asus VivoBook 15 OLED",
-    description:
-      "Experience the future of visual excellence with the Asus VivoBook 15 OLED. Immerse yourself in stunning colors and sharp details on the vibrant OLED display, while enjoying seamless performance powered by cutting-edge technology. The sleek design adds a touch of elegance to your computing experience, making the Asus VivoBook 15 OLED the perfect blend of style and substance. Elevate your work and entertainment—discover the brilliance within each frame.",
-    tags: ["AsusVivoBook", "#OLEDDisplay"],
-  }
+  // const auction = {
+  //   id: 1,
+  //   imageUrl: "/img/mocks/20231118_095333.jpg",
+  //   title: "Asus VivoBook 15 OLED",
+  //   description:
+  //     "Experience the future of visual excellence with the Asus VivoBook 15 OLED. Immerse yourself in stunning colors and sharp details on the vibrant OLED display, while enjoying seamless performance powered by cutting-edge technology. The sleek design adds a touch of elegance to your computing experience, making the Asus VivoBook 15 OLED the perfect blend of style and substance. Elevate your work and entertainment—discover the brilliance within each frame.",
+  //   tags: ["AsusVivoBook", "#OLEDDisplay"],
+  // }
 
   const [refresh, setRefresh] = useState(false);
 
@@ -38,9 +38,9 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
     <Container component={"main"}>
       <Grid container spacing={2} pt={4} pb={4}>
         <Grid item xs={3}>
-          <ProductInfo
-            auction={auction}
-          />
+          {auctionDetails && <ProductInfo
+              auction={auctionDetails}
+          />}
         </Grid>
         <Grid item xs={6}>
           <PersonaLiveComponent />
