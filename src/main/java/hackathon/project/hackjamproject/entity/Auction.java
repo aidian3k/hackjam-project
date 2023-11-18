@@ -79,7 +79,7 @@ public class Auction {
 	@Builder.Default
 	private List<Bid> bids = new ArrayList<>();
 
-	@OneToOne(mappedBy = "auction")
+	@OneToOne(mappedBy = "auction", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Media media;
