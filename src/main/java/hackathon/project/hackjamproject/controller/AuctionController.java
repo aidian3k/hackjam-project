@@ -2,6 +2,7 @@ package hackathon.project.hackjamproject.controller;
 
 import hackathon.project.hackjamproject.dto.auction.AuctionCreationDTO;
 import hackathon.project.hackjamproject.dto.auction.MainPageAuctionDTO;
+import hackathon.project.hackjamproject.dto.auction.UpdateAuctionRequest;
 import hackathon.project.hackjamproject.entity.Auction;
 import hackathon.project.hackjamproject.entity.Media;
 import hackathon.project.hackjamproject.helpers.openai.OpenAiService;
@@ -10,6 +11,7 @@ import hackathon.project.hackjamproject.service.AuctionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,5 +46,14 @@ class AuctionController {
 	@GetMapping("/auctions")
 	public List<MainPageAuctionDTO> getAllAuctions() {
 		return auctionService.getAllAuctions();
+	}
+
+	@PutMapping("/auction/{id}")
+	public ResponseEntity<Void> updateAuction(
+		@PathVariable Long id,
+		@RequestBody UpdateAuctionRequest req
+	) {
+		auctionService.updateAuction(id, req.getPrice());
+		return ResponseEntity.ok().build();
 	}
 }

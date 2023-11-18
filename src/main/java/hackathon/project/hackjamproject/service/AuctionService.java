@@ -44,6 +44,12 @@ public class AuctionService {
 			);
 	}
 
+	public void updateAuction(Long auctionId, Long price) {
+		Auction auction = findAuctionById(auctionId);
+		auction.getAuctionCoreInformation().setPrice(price);
+		auctionRepository.save(auction);
+	}
+
 	public Auction handleCreateAuction(
 		AuctionCreationDTO auctionCreationDTO,
 		Long userId
@@ -90,6 +96,7 @@ public class AuctionService {
 			.description(auction.getAuctionCoreInformation().getDescription())
 			.timeLeft(getAuctionTimeLeft(auction.getEndDate()))
 			.bidAuctionInfo(getBidAuctionInfo(auction))
+			.biggestBid(auction.getAuctionCoreInformation().getPrice().intValue())
 			.build();
 	}
 
