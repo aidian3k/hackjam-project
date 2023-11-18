@@ -46,9 +46,4 @@ class AuctionController {
 	public List<MainPageAuctionDTO> getAllAuctions() {
 		return auctionService.getAllAuctions();
 	}
-
-	@GetMapping("/auction/{auctionId}")
-	public MainPageAuctionDTO getMainPageAuctionDTO(@PathVariable Long auctionId) {
-		return auctionService.getMainPageAuctionDTO(auctionId);
-	}
 }
