@@ -5,6 +5,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import {useEffect, useState} from "react";
 import {Media} from "@/app/auctions/add-auction/page";
 import axios from "axios";
+import {useSelector} from "react-redux";
+import {RootState} from "@/redux/global-store";
 
 
 export type QuestionDTO = {
@@ -24,6 +26,7 @@ export default function ProductQuestions(props: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentText, setCurrentText] = useState("");
   const [media, setMedia] = useState<Media | null>(null);
+  const language = useSelector((state: RootState) => state.language.language);
 
 
     useEffect(() => {
@@ -33,10 +36,11 @@ export default function ProductQuestions(props: any) {
   function updateChatMessageAndPlay() {
       setLoading(true);
       const data: QuestionDTO = {
-        language: 'english',
+        language: language,
         auctionId: Number(props.auctionId),
         question: currentText
       }
+      console.log(data)
 
       axios.post<QuestionResponseDTO>("http://localhost:8080/api/question", data)
           .then(result => result.data)

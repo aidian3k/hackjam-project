@@ -22,11 +22,13 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuList from "@mui/material/MenuList";
 import { useRouter } from "next/navigation";
+import {useDispatch} from "react-redux";
+import {setLanguage} from "@/redux/features/language/language-slice";
 
 const pages = ["Auctions", "Add auction"];
 const routes = ["/auctions", "/auctions/add-auction"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const options = ["English", "Polish", "Hindi", "Arabic"];
+const options = ["english", "polish", "hindi", "arabic"];
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -40,6 +42,7 @@ function ResponsiveAppBar() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -53,7 +56,8 @@ function ResponsiveAppBar() {
   };
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+    console.log(`You clicked ${options[selectedIndex]}`);
+    dispatch(setLanguage(options[selectedIndex]))
   };
 
   const handleMenuItemClick = (
@@ -61,6 +65,7 @@ function ResponsiveAppBar() {
     index: number
   ) => {
     setSelectedIndex(index);
+    dispatch(setLanguage(options[index].toLowerCase()))
     setOpen(false);
   };
 
@@ -248,7 +253,7 @@ function ResponsiveAppBar() {
                               alt="logo"
                               style={{ paddingRight: 5 }}
                             />
-                            {option}
+                            {option.toUpperCase()}
                           </MenuItem>
                         ))}
                       </MenuList>

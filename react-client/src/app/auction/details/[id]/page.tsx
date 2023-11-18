@@ -5,7 +5,7 @@ import BidInput from "@/components/bid-input/bidInput";
 import ProductQuestions from "@/components/product-questions/productQuestions";
 import AuctionInfo from "@/components/auction-info/auctionInfo";
 import PersonaLiveComponent from "@/components/persona-live-component/personaLiveComponent";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAuctionById } from "@/services/auction-service";
 import { MainPageAuctionDto } from "@/types/auctionTypes";
 import {useState} from "react";
