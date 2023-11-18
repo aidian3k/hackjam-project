@@ -6,6 +6,9 @@ import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider, Theme, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Chip } from '@mui/material';
+import { TRACE_OUTPUT_VERSION } from 'next/dist/shared/lib/constants';
 
 const customTheme = (outerTheme: Theme) =>
   createTheme({
@@ -93,9 +96,75 @@ function FinalAuction() {
             display: 'block',
             margin: 5,
           }}/>
+          <Autocomplete
+      sx={{
+        display: 'block',
+        margin: 5,
+      }}
+      fullWidth
+      multiple
+      id="tags-standard"
+      options={tags}
+      getOptionLabel={(option) => option.tag}
+      defaultValue={[tags[0]]}
+      renderTags={(value, getTagProps) =>
+        value.map((option, index) => (
+          <Chip
+            label={option.tag}
+            {...getTagProps({ index })}
+            sx={{
+              backgroundColor: '#176B87', // Change to your desired background color
+              color: 'white', // Change to your desired text color
+            }}
+          />
+        ))
+      }
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="standard"
+          label="Multiple values"
+          placeholder="Favorites"
+        />
+      )}
+    />
+
+    <div style={{ display: 'flex', width: '100vw', justifyContent: 'center' }}>
+      <Button
+        variant="contained"
+        sx={{
+          marginRight: 10,
+          backgroundColor: '#64CCC5',
+          '&:hover': {
+            backgroundColor: '#4FA3A1',
+          },
+        }}
+      >
+        Add auction
+      </Button>
+      <Button
+        variant="outlined"
+        sx={{
+          borderColor: '#64CCC5',
+          color: '#64CCC5',
+          '&:hover': {
+            borderColor: '#4FA3A1',
+            color: '#4FA3A1',
+          },
+        }}
+      >
+        Decline auction
+      </Button>
+    </div>
           <div style={{display: 'flex', width: '100vw', justifyContent: 'center'}}>
-            <Button variant="contained" sx={{marginRight: 10}}>Add auction</Button>
-            <Button variant="outlined">Decline auction</Button>
+            <Button variant="contained" sx={{marginRight: 10, backgroundColor: '#64CCC5',
+         '&:hover': {
+          backgroundColor: '#4FA3A1', 
+        } }}>Add auction</Button>
+            <Button variant="outlined" sx={{marginRight: 10, backgroundColor: '#64CCC5',
+         '&:hover': {
+          backgroundColor: '#4FA3A1', 
+        } }}>Decline auction</Button>
         </div>
           
       </ThemeProvider>
@@ -103,4 +172,12 @@ function FinalAuction() {
   ); 
 }
 
+const tags = [
+  {tag: "Siema1"},
+  {tag: "Siema2"},
+  {tag: "Siema3"},
+  {tag: "Siema4"},
+  {tag: "Siema5"},
+  {tag: "Siema6"},
+]
 export default FinalAuction;
