@@ -20,6 +20,7 @@ public class GoogleLensService {
 	public GoogleResponse getTitleAndAverageProductPrice(Media media) {
 		GoogleLensRootResponse googleLensRootResponse = googleLensConnector.getGoogleLensResponseFromImage(
 			"google_lens",
+			"pl",
 			media.getImageUrl(),
 			GOOGLE_API_KEY
 		);

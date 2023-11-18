@@ -13,6 +13,7 @@ public interface GoogleLensConnector {
 	@GetMapping
 	GoogleLensRootResponse getGoogleLensResponseFromImage(
 		@RequestParam("engine") String engine,
+		@RequestParam("hl") String country,
 		@RequestParam("url") String imageUrl,
 		@RequestParam("api_key") String apiKey
 	);
