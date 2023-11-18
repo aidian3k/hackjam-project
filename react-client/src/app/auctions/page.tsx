@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {AuctionCard} from "@/components/auction-card/auctionCard";
+import {useRouter} from "next/navigation";
 
 export type Auction = {
     id: number,
@@ -48,6 +49,7 @@ const auctionsMock: Auction[] = [
 
 
 export default function Auctions() {
+    const router = useRouter();
     const [auctions, setAuctions] = useState<Auction[]>([]);
 
     useEffect(() => {
@@ -64,9 +66,7 @@ export default function Auctions() {
     }, []);
 
     const handleAuctionCardClick = (auctionId: number) => {
-        // Handle the "use client" functionality here
-        console.log(`Auction card clicked with ID: ${auctionId}`);
-        // Add your logic for "use client" here
+        router.push(`/auction/details/${auctionId}`);
     };
 
 

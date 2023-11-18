@@ -1,7 +1,8 @@
 import { Box, Paper, Typography } from "@mui/material";
 import Image from "next/image";
+import {MainPageAuctionDto} from "@/types/auctionTypes";
 
-export default function ProductInfo( { auction }: { auction: any }) {
+export default function ProductInfo( { auction }: { auction: MainPageAuctionDto }) {
   return (
     <Paper elevation={2}  sx={{ p: 2, height: '100%' }}>
       <Box
@@ -28,7 +29,6 @@ export default function ProductInfo( { auction }: { auction: any }) {
           alt={"product"}
           width={160}
           height={160}
-          style={{ borderRadius: 40 }}
         />
       </Box>
       <Box>
