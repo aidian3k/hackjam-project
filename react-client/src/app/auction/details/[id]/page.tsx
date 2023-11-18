@@ -8,6 +8,7 @@ import PersonaLiveComponent from "@/components/persona-live-component/personaLiv
 import { useEffect, useState } from "react";
 import { getAuctionById } from "@/services/auction-service";
 import { MainPageAuctionDto } from "@/types/auctionTypes";
+import {useState} from "react";
 
 export default function AuctionDetails({ params }: { params: { id: number } }) {
   const [auctionDetails, setAuctionDetails] =
@@ -17,6 +18,8 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
     { name: "Lucas Tekk", price: 200 },
     { name: "Monica Rose", price: 120 },
   ];
+  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+
 
   // const auction = {
   //   id: 1,
@@ -42,7 +45,7 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
           {auctionDetails && <ProductInfo auction={auctionDetails} />}
         </Grid>
         <Grid item xs={6}>
-          <PersonaLiveComponent />
+          <PersonaLiveComponent isPlaying={isPlayingAudio}/>
         </Grid>
         <Grid item xs={3}>
           {auctionDetails && (
@@ -57,7 +60,7 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
       </Grid>
       <BidInput />
       <Box mt={2}>
-        <ProductQuestions />
+        <ProductQuestions auctionId={params.id} setIsPlaying={setIsPlayingAudio} isPlaying={isPlayingAudio}/>
       </Box>
     </Container>
   );

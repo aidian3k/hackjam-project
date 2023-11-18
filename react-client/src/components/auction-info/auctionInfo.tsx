@@ -1,5 +1,6 @@
 // components/AuctionInfo.tsx
-import React from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import { Paper, Box, Typography } from "@mui/material";
 
@@ -31,6 +32,16 @@ const AuctionInfo: React.FC<AuctionInfoProps> = ({
   topBidders,
   endDate,
 }) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // Clear the interval on component unmount to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, []);
   var timeLeft = endDate.getTime() - new Date().getTime();
   return (
     <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
