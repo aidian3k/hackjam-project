@@ -1,7 +1,12 @@
 package hackathon.project.hackjamproject.service;
 
 import hackathon.project.hackjamproject.dto.auction.AuctionCreationDTO;
+import hackathon.project.hackjamproject.dto.auction.BidAuctionInfo;
+import hackathon.project.hackjamproject.dto.auction.MainPageAuctionDTO;
+import hackathon.project.hackjamproject.dto.auction.TimeLeft;
+import hackathon.project.hackjamproject.dto.auction.UserAuctionDTO;
 import hackathon.project.hackjamproject.entity.Auction;
+import hackathon.project.hackjamproject.entity.Bid;
 import hackathon.project.hackjamproject.entity.Media;
 import hackathon.project.hackjamproject.entity.Tag;
 import hackathon.project.hackjamproject.entity.User;
@@ -10,6 +15,11 @@ import hackathon.project.hackjamproject.helpers.googlelens.GoogleResponse;
 import hackathon.project.hackjamproject.helpers.openai.OpenAiService;
 import hackathon.project.hackjamproject.helpers.openai.dtos.ArtificialIntelligenceResponse;
 import hackathon.project.hackjamproject.repository.AuctionRepository;
+
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +33,9 @@ public class AuctionService {
 	private final TagService tagService;
 	private final AuctionRepository auctionRepository;
 	private final UserService userService;
-	private final ImageService imageService;
 	private final GoogleLensService googleLensService;
 	private final OpenAiService openAiService;
+	private final Clock clock;
 
 	public Auction findAuctionById(Long auctionId) {
 		return auctionRepository
@@ -71,5 +81,54 @@ public class AuctionService {
 			media
 		);
 		return openAiService.getAuctionCoreInformation(googleResponse);
+	}
+
+	public MainPageAuctionDTO getMainPageAuctionDTO(Long auctionId) {
+		Auction auction = findAuctionById(auctionId);
+
+		return MainPageAuctionDTO
+				.builder()
+				.imageUrl(auction.getMedia().getImageUrl())
+				.title(auction.getAuctionCoreInformation().getTitle())
+				.description(auction.getAuctionCoreInformation().getDescription())
+				.timeLeft(getAuctionTimeLeft(auction.getEndDate()))
+				.bidAuctionInfo(getBidAuctionInfo(auction))
+				.build();
+	}
+
+	private BidAuctionInfo getBidAuctionInfo(Auction auction) {
+		List<Bid> bids =auction.getBids();
+		int numberOfBidders = bids.size();
+		int maximumNumberOfMaxBidders = 6;
+		List<UserAuctionDTO> topBidders = bids.stream()
+				.sorted(Comparator.comparing(Bid::getBidPrice))
+				.map(bid -> userService.getUserInfoForAuction(bid.getUser().getId(), bid.getBidPrice()))
+				.limit(maximumNumberOfMaxBidders)
+				.toList();
+		Long highestBid;
+
+		if(topBidders.get(0) == null) {
+			highestBid = auction.getAuctionCoreInformation().getPrice();
+		} else {
+			highestBid = topBidders.get(0).getBidPrice();
+		}
+
+		return BidAuctionInfo
+				.builder()
+				.numberOfBidders(numberOfBidders)
+				.highestBid(highestBid)
+				.topBiddersInfo(topBidders)
+				.build();
+	}
+
+	private TimeLeft getAuctionTimeLeft(LocalDateTime endTime) {
+		Duration duration = Duration.between(LocalDateTime.now(clock), endTime);
+		return TimeLeft
+				.builder()
+				.days(duration.toDays())
+				.hours(duration.toHours() % 24)
+				.minutes(duration.toMinutes() % 60)
+				.seconds(duration.toSeconds() % 60)
+				.build();
 	}
 }

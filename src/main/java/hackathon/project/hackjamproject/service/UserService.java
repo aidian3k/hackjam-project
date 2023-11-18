@@ -1,5 +1,6 @@
 package hackathon.project.hackjamproject.service;
 
+import hackathon.project.hackjamproject.dto.auction.UserAuctionDTO;
 import hackathon.project.hackjamproject.dto.user.UserCreationDTO;
 import hackathon.project.hackjamproject.dto.user.UserDTO;
 import hackathon.project.hackjamproject.entity.User;
@@ -51,6 +52,17 @@ public class UserService {
 					.build()
 			)
 			.toList();
+	}
+
+	public UserAuctionDTO getUserInfoForAuction(Long userId, Long bidPrice) {
+		User userInfo = getUserById(userId);
+
+		return UserAuctionDTO
+				.builder()
+				.name(userInfo.getName())
+				.surname(userInfo.getSurname())
+				.bidPrice(bidPrice)
+				.build();
 	}
 
 	public User getUserById(Long userId) {

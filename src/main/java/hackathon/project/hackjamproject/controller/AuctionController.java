@@ -1,6 +1,7 @@
 package hackathon.project.hackjamproject.controller;
 
 import hackathon.project.hackjamproject.dto.auction.AuctionCreationDTO;
+import hackathon.project.hackjamproject.dto.auction.MainPageAuctionDTO;
 import hackathon.project.hackjamproject.entity.Auction;
 import hackathon.project.hackjamproject.entity.Media;
 import hackathon.project.hackjamproject.helpers.openai.dtos.ArtificialIntelligenceResponse;
@@ -17,17 +18,17 @@ class AuctionController {
     private final AuctionService auctionService;
 
     @GetMapping("/auction/{id}")
-    Auction getByID(@PathVariable Long id) {
-        return auctionService.findAuctionById(id);
+    public MainPageAuctionDTO getAuctionById(@PathVariable Long id) {
+        return auctionService.getMainPageAuctionDTO(id);
     }
 
     @PostMapping("/auction/{userId}")
-    Auction create(@RequestBody AuctionCreationDTO auction, @PathVariable Long userId) {
+    public Auction create(@RequestBody AuctionCreationDTO auction, @PathVariable Long userId) {
         return auctionService.handleCreateAuction(auction, userId);
     }
 
     @GetMapping("/auction/ai")
-    ArtificialIntelligenceResponse getAIResponse(@RequestBody Media media) {
+    public ArtificialIntelligenceResponse gArtificialIntelligenceResponse(@RequestBody Media media) {
         return auctionService.getAuctionCoreInformationUsingPhoto(media);
     }
 }
