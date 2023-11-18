@@ -15,20 +15,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @Slf4j
 class AuctionController {
-    private final AuctionService auctionService;
 
-    @GetMapping("/auction/{id}")
-    public MainPageAuctionDTO getAuctionById(@PathVariable Long id) {
-        return auctionService.getMainPageAuctionDTO(id);
-    }
+	private final AuctionService auctionService;
 
-    @PostMapping("/auction/{userId}")
-    public Auction create(@RequestBody AuctionCreationDTO auction, @PathVariable Long userId) {
-        return auctionService.handleCreateAuction(auction, userId);
-    }
+	@GetMapping("/auction/{id}")
+	public MainPageAuctionDTO getAuctionById(@PathVariable Long id) {
+		return auctionService.getMainPageAuctionDTO(id);
+	}
 
-    @GetMapping("/auction/ai")
-    public ArtificialIntelligenceResponse gArtificialIntelligenceResponse(@RequestBody Media media) {
-        return auctionService.getAuctionCoreInformationUsingPhoto(media);
-    }
+	@PostMapping("/auction/{userId}")
+	public Auction create(
+		@RequestBody AuctionCreationDTO auction,
+		@PathVariable Long userId
+	) {
+		return auctionService.handleCreateAuction(auction, userId);
+	}
+
+	@PostMapping("/auction/ai")
+	public ArtificialIntelligenceResponse gArtificialIntelligenceResponse(
+		@RequestBody Media media
+	) {
+		return auctionService.getAuctionCoreInformationUsingPhoto(media);
+	}
 }
