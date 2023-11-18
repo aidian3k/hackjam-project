@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class BidAuctionInfo {
-
 	private Long highestBid;
 	private long numberOfBidders;
 	private List<UserAuctionDTO> topBiddersInfo;
