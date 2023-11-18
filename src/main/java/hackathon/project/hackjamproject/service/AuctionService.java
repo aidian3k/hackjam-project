@@ -57,7 +57,14 @@ public class AuctionService {
 			.endDate(auctionCreationDTO.getEndDate())
 			.startDate(auctionCreationDTO.getStartDate())
 			.build();
+
 		Auction savedAuction = auctionRepository.save(auction);
+		//Media savedMedia = mediaRepository.save(auctionCreationDTO.getMedia());
+		//savedMedia.setAuction(savedAuction);
+		auctionCreationDTO.getMedia().setAuction(savedAuction);
+		//savedAuction.setMedia(savedMedia);
+		savedAuction.setMedia(auctionCreationDTO.getMedia());
+		savedAuction = auctionRepository.save(auction);
 		//		List<Tag> tags = auctionCreationDTO
 		//			.getTags()
 		//			.stream()
@@ -77,7 +84,8 @@ public class AuctionService {
 
 		return MainPageAuctionDTO
 			.builder()
-			//.imageUrl(auction.getMedia().getImageUrl())
+			.id(auction.getId())
+			.imageUrl(auction.getMedia().getImageUrl())
 			.title(auction.getAuctionCoreInformation().getTitle())
 			.description(auction.getAuctionCoreInformation().getDescription())
 			.timeLeft(getAuctionTimeLeft(auction.getEndDate()))

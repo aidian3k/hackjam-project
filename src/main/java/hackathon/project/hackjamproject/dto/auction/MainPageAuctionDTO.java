@@ -15,6 +15,7 @@ import lombok.Setter;
 @Builder
 public class MainPageAuctionDTO {
 
+	private Long id;
 	private String imageUrl;
 	private String title;
 	private String description;
