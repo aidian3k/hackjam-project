@@ -33,8 +33,8 @@ const AuctionInfo: React.FC<AuctionInfoProps> = ({
 }) => {
   var timeLeft = endDate.getTime() - new Date().getTime();
   return (
-    <Paper elevation={2} sx={{ p: 2 }}>
-      <Box>
+    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+      <Box style={{width: '100%', height: '100%', position: 'relative' }}>
         <Typography variant="body1" style={{ marginBottom: "8px" }}>
           Time left: {formatTimeDifference(timeLeft)}
         </Typography>
