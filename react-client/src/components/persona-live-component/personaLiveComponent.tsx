@@ -1,19 +1,29 @@
 import { Box, Paper } from "@mui/material";
 import Image from "next/image";
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import {over, Client} from 'stompjs'
+import SockJS from "sockjs-client"
 
+var socketConnection : Client;
 export default function PersonaLiveComponent() {
 
-    const socket = new SockJS("")
-    const socketConnection = Stomp.over(socket);
+    const socket = new SockJS("http://http://localhost:3000/ws")
+    socketConnection = over(socket)
 
-    socketConnection.connect({}, function (frame) {
-        console.log('Connected to SockJS and Stomp');
-        socketConnection.subscribe('/topic/example', function (message) {
-          console.log('Received message:', message.body);
-        });
-    })
+    const onConnect = () => {
+        socketConnection.subscribe('/topic/message', (payload) => {
+            let payloadData=JSON.parse(payload.body);
+            console.log(payloadData);
+            
+        })
+    }
+
+    const onError = () => {
+        console.log("Error");
+        
+    }
+
+    socketConnection.connect({}, onConnect, onError);
+
 
 
     return (
