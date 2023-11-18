@@ -1,3 +1,5 @@
+import { UserAuctionDto } from '@/types/userTypes';
+
 type MediaDto = {
   id: number;
   imageUrl: string;
@@ -33,8 +35,30 @@ type AuctionCreationDto = {
   media: MediaDto;
 };
 
+type MainPageAuctionDto = {
+  imageUrl: string;
+  title: string;
+  description: string;
+  timeLeft: TimeLeft;
+  biggestBid: number;
+  bidAuctionInfo: BidAuctionInfoDto;
+};
+
 type TagDto = {
   name: string;
 };
 
-export type { MediaDto, AuctionDetailsDto, AuctionDto, AuctionCreationDto, TagDto };
+type TimeLeft = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+type BidAuctionInfoDto = {
+  highestBid: number;
+  numberOfBidders: number;
+  topBiddersInfo: UserAuctionDto[];
+};
+
+export type { MediaDto, AuctionDetailsDto, AuctionDto, AuctionCreationDto, TagDto, MainPageAuctionDto };

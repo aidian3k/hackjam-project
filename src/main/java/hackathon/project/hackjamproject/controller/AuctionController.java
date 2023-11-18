@@ -7,11 +7,10 @@ import hackathon.project.hackjamproject.entity.Media;
 import hackathon.project.hackjamproject.helpers.openai.OpenAiService;
 import hackathon.project.hackjamproject.helpers.openai.dtos.ArtificialIntelligenceResponse;
 import hackathon.project.hackjamproject.service.AuctionService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ class AuctionController {
 
 	@PostMapping("/auction/ai")
 	public ArtificialIntelligenceResponse gArtificialIntelligenceResponse(
-			@RequestBody Media media
+		@RequestBody Media media
 	) {
 		return openAiService.getAuctionCoreInformationUsingPhoto(media);
 	}

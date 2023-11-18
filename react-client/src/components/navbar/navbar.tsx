@@ -24,7 +24,7 @@ import MenuList from "@mui/material/MenuList";
 import { useRouter } from "next/navigation";
 
 const pages = ["Auctions", "Add auction"];
-const routes = ["/", "/auctions/add-auction"];
+const routes = ["/auctions", "/auctions/add-auction"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const options = ["English", "Polish", "Hindi", "Arabic"];
 

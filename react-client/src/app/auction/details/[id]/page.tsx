@@ -1,11 +1,17 @@
+"use client";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import ProductInfo from "@/components/product-info/productInfo";
 import BidInput from "@/components/bid-input/bidInput";
 import ProductQuestions from "@/components/product-questions/productQuestions";
 import AuctionInfo from "@/components/auction-info/auctionInfo";
 import PersonaLiveComponent from "@/components/persona-live-component/personaLiveComponent";
+import { useEffect, useState } from "react";
+import { getAuctionById } from "@/services/auction-service";
+import { MainPageAuctionDto } from "@/types/auctionTypes";
 
 export default function AuctionDetails({ params }: { params: { id: number } }) {
+  const [auctionDetails, setAuctionDetails] =
+    useState<MainPageAuctionDto | null>(null);
   const bidders = [
     { name: "Jhon Smith", price: 250 },
     { name: "Lucas Tekk", price: 200 },
@@ -21,6 +27,13 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
     tags: ["AsusVivoBook", "#OLEDDisplay"],
   }
 
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    setInterval(() => setRefresh(!refresh), 1000);
+    getAuctionById(params.id).then((response) => setAuctionDetails(response));
+  }, [refresh]);
+
   return (
     <Container component={"main"}>
       <Grid container spacing={2} pt={4} pb={4}>
@@ -30,15 +43,16 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
           />
         </Grid>
         <Grid item xs={6}>
-            <PersonaLiveComponent />
+          <PersonaLiveComponent />
         </Grid>
         <Grid item xs={3}>
+          {auctionDetails && (
             <AuctionInfo
-                currentPrice={999}
-                numberOfBidders={3}
-                topBidders={bidders}
-                endDate={new Date("2023-12-20T12:01:04.753Z")}
-            />
+              currentPrice={auctionDetails.biggestBid}
+              numberOfBidders={auctionDetails.bidAuctionInfo.numberOfBidders}
+              topBidders={bidders}
+              endDate={new Date("2023-12-20T12:01:04.753Z")}
+            />)}
         </Grid>
       </Grid>
       <BidInput />

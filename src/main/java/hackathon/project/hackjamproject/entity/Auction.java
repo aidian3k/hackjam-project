@@ -11,6 +11,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -57,7 +58,7 @@ public class Auction {
 	@Enumerated(EnumType.STRING)
 	private Localization localization;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private User owner;
@@ -66,13 +67,13 @@ public class Auction {
 	@NotNull
 	private AuctionCoreInformation auctionCoreInformation;
 
-	@OneToMany(mappedBy = "auction")
+	@OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@Builder.Default
 	private List<Tag> tags = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "auction")
+	@OneToMany(mappedBy = "auction")
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@Builder.Default
