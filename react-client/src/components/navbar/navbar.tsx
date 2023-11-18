@@ -21,12 +21,16 @@ import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
+import { useRouter } from 'next/navigation';
 
 const pages = ['Auctions', 'Add auction'];
+const routes = ['/auctions/add-auction', 'app'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const options = ['English', 'Polish', 'Hindi'];
+const options = ['English', 'Polish', 'Hindi', 'Arabic'];
 
 function ResponsiveAppBar() {
+  const router = useRouter();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -38,10 +42,6 @@ function ResponsiveAppBar() {
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -123,13 +123,13 @@ function ResponsiveAppBar() {
                 horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => router.push("/")}
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page, idx) => (
+                <MenuItem key={page} onClick={() => router.push(routes[idx])}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -155,10 +155,10 @@ function ResponsiveAppBar() {
           </Typography>
           
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, idx) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => router.push(routes[idx])}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
