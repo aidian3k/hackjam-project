@@ -21,16 +21,12 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
             <PersonaLiveComponent />
         </Grid>
         <Grid item xs={3}>
-            <ProductInfo />
-        </Grid>
-        <Grid item xs={6}></Grid>
-        <Grid item xs={3}>
-          <AuctionInfo
-            currentPrice={999}
-            numberOfBidders={3}
-            topBidders={bidders}
-            endDate={new Date("2023-12-20T12:01:04.753Z")}
-          />
+            <AuctionInfo
+                currentPrice={999}
+                numberOfBidders={3}
+                topBidders={bidders}
+                endDate={new Date("2023-12-20T12:01:04.753Z")}
+            />
         </Grid>
       </Grid>
       <BidInput />
