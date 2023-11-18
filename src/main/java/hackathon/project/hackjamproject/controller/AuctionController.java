@@ -4,6 +4,7 @@ import hackathon.project.hackjamproject.dto.auction.AuctionCreationDTO;
 import hackathon.project.hackjamproject.dto.auction.MainPageAuctionDTO;
 import hackathon.project.hackjamproject.entity.Auction;
 import hackathon.project.hackjamproject.entity.Media;
+import hackathon.project.hackjamproject.helpers.openai.OpenAiService;
 import hackathon.project.hackjamproject.helpers.openai.dtos.ArtificialIntelligenceResponse;
 import hackathon.project.hackjamproject.service.AuctionService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 class AuctionController {
 
 	private final AuctionService auctionService;
+    private final OpenAiService openAiService;
 
 	@GetMapping("/auction/{id}")
 	public MainPageAuctionDTO getAuctionById(@PathVariable Long id) {
@@ -35,6 +37,11 @@ class AuctionController {
 	public ArtificialIntelligenceResponse gArtificialIntelligenceResponse(
 		@RequestBody Media media
 	) {
-		return auctionService.getAuctionCoreInformationUsingPhoto(media);
+		return openAiService.getAuctionCoreInformationUsingPhoto(media);
 	}
+
+    @GetMapping("/auction/{auctionId}")
+    public MainPageAuctionDTO getMainPageAuctionDTO(@PathVariable Long auctionId) {
+        return auctionService.getMainPageAuctionDTO(auctionId);
+    }
 }

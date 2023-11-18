@@ -66,7 +66,7 @@ public class Auction {
 	@NotNull
 	private AuctionCoreInformation auctionCoreInformation;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "auction")
+	@OneToMany(mappedBy = "auction")
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@Builder.Default

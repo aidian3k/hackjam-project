@@ -19,7 +19,7 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public UserCreationDTO createUser(UserCreationDTO userCreationDTO) {
+	public User createUser(UserCreationDTO userCreationDTO) {
 		User user = User
 			.builder()
 			.name(userCreationDTO.getName())
@@ -29,9 +29,7 @@ public class UserService {
 			.localization(userCreationDTO.getLocalization())
 			.build();
 
-		userRepository.save(user);
-
-		return userCreationDTO;
+		return userRepository.save(user);
 	}
 
 	public User updateCurrentUser(User updatedUser) {

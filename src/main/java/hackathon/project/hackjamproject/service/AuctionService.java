@@ -33,8 +33,6 @@ public class AuctionService {
 	private final TagService tagService;
 	private final AuctionRepository auctionRepository;
 	private final UserService userService;
-	private final GoogleLensService googleLensService;
-	private final OpenAiService openAiService;
 	private final Clock clock;
 
 	public Auction findAuctionById(Long auctionId) {
@@ -67,20 +65,9 @@ public class AuctionService {
 			.tags(tags)
 			.build();
 
-		auctionRepository.save(auction);
-		user.getAuctions().add(auction);
-		userService.updateCurrentUser(user);
+		Auction savedAuction = auctionRepository.save(auction);
 
-		return auction;
-	}
-
-	public ArtificialIntelligenceResponse getAuctionCoreInformationUsingPhoto(
-		Media media
-	) {
-		GoogleResponse googleResponse = googleLensService.getTitleAndAverageProductPrice(
-			media
-		);
-		return openAiService.getAuctionCoreInformation(googleResponse);
+		return savedAuction;
 	}
 
 	public MainPageAuctionDTO getMainPageAuctionDTO(Long auctionId) {
