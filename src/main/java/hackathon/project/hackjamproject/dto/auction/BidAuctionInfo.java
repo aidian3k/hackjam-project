@@ -1,13 +1,12 @@
 package hackathon.project.hackjamproject.dto.auction;
 
 import hackathon.project.hackjamproject.dto.user.UserDTO;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class BidAuctionInfo {
-    private Long highestBid;
-    private long numberOfBidders;
-    private List<UserAuctionDTO> topBiddersInfo;
+
+	private Long highestBid;
+	private long numberOfBidders;
+	private List<UserAuctionDTO> topBiddersInfo;
 }

@@ -56,11 +56,11 @@ public class UserService {
 		User userInfo = getUserById(userId);
 
 		return UserAuctionDTO
-				.builder()
-				.name(userInfo.getName())
-				.surname(userInfo.getSurname())
-				.bidPrice(bidPrice)
-				.build();
+			.builder()
+			.name(userInfo.getName())
+			.surname(userInfo.getSurname())
+			.bidPrice(bidPrice)
+			.build();
 	}
 
 	public User getUserById(Long userId) {
