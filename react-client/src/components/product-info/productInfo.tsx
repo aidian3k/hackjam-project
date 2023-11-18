@@ -26,8 +26,8 @@ export default function ProductInfo() {
         <Image
           src={"/img/product_img.jpg"}
           alt={"product"}
-          width={80}
-          height={80}
+          width={160}
+          height={160}
           style={{ borderRadius: 40 }}
         />
       </Box>
