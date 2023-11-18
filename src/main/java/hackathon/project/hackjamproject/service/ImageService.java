@@ -28,10 +28,6 @@ public class ImageService {
 	public Media uploadImage(MultipartFile multipartFile) {
 		File convertedImage = convertMultiPartFileToFile(multipartFile);
 		String fileExtension = getFileExtension(multipartFile);
-		String fileName = generateFileNameWithExtension(
-			multipartFile.getOriginalFilename(),
-			fileExtension
-		);
 
 		amazonS3.putObject(
 			new PutObjectRequest(
@@ -44,18 +40,9 @@ public class ImageService {
 		return mediaRepository.save(
 			Media
 				.builder()
-				.imageUrl("https://aidian3k-bucket-test.s3.amazonaws.com/" + fileName)
+				.imageUrl("https://aidian3k-bucket-test.s3.amazonaws.com/" + multipartFile.getOriginalFilename())
 				.extension(fileExtension)
 				.build()
-		);
-	}
-
-	private String generateFileNameWithExtension(
-		String originalFilename,
-		String fileExtension
-	) {
-		return (
-			originalFilename + "_" + System.currentTimeMillis() + "." + fileExtension
 		);
 	}
 

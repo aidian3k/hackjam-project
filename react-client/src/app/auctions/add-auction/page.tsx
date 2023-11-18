@@ -17,6 +17,20 @@ import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { generateAuctionDetails } from "@/services/auction-service";
 
+export type Media = {
+  id: number,
+  imageUrl: string,
+  extension: string,
+  auction: Auction
+}
+
+export type Auction = {
+  id: number,
+  startDate: Date,
+  endDate: Date,
+  localization: string
+}
+
 export default function AddAuction() {
   const [file, setFile] = useState<File | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
