@@ -6,7 +6,7 @@ type MediaDto = {
 };
 
 type AuctionDto = {
-  id: number;
+  id?: number;
   startDate: Date;
   endDate: Date;
   localization: string;
@@ -23,4 +23,18 @@ type AuctionCoreInformationDto = {
   price: number;
 };
 
-export type { MediaDto, AuctionDetailsDto };
+type AuctionCreationDto = {
+  id?: number;
+  startDate: Date;
+  endDate: Date;
+  localization: string;
+  tags: TagDto[];
+  auctionCoreInformation: AuctionCoreInformationDto;
+  media: MediaDto;
+};
+
+type TagDto = {
+  name: string;
+};
+
+export type { MediaDto, AuctionDetailsDto, AuctionDto, AuctionCreationDto, TagDto };
