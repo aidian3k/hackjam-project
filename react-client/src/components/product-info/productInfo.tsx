@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function ProductInfo() {
+export default function ProductInfo( { auction }: { auction: any }) {
   return (
     <Paper elevation={2}  sx={{ p: 2, height: '100%' }}>
       <Box
@@ -24,7 +24,7 @@ export default function ProductInfo() {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Image
-          src={"/img/product_img.jpg"}
+          src={auction.imageUrl}
           alt={"product"}
           width={160}
           height={160}
@@ -39,12 +39,13 @@ export default function ProductInfo() {
           mt={2}
           mb={1}
         >
-          Chair
+            {auction.title}
         </Typography>
         <Typography variant={"body1"}>
-          The Nimbus boasts a sleek and modern design, with its gracefully
-          curved armrests and minimalist silhouette. The frame, constructed from
-          durable yet lightweight materials, ensures.
+          {/*The Nimbus boasts a sleek and modern design, with its gracefully*/}
+          {/*curved armrests and minimalist silhouette. The frame, constructed from*/}
+          {/*durable yet lightweight materials, ensures.*/}
+            {auction.description}
         </Typography>
       </Box>
     </Paper>

@@ -52,7 +52,14 @@ export default function Auctions() {
 
     useEffect(() => {
 
-        setAuctions(auctionsMock);
+        const fetchAuctions = async () => {
+            const response = await fetch(`http://localhost:8080/api/auctions`);
+            const data = await response.json();
+            setAuctions(data);
+        }
+
+        fetchAuctions();
+        // setAuctions(auctionsMock);
 
     }, []);
 
