@@ -46,6 +46,10 @@ public class GoogleLensService {
 	private Long getAveragePriceFromKnowledgeGraph(
 		List<KnowledgeGraph> knowledgeGraphs
 	) {
+		if (knowledgeGraphs.get(0).getShopping_results() == null) {
+			return null;
+		}
+
 		List<ShoppingResult> shoppingResults = knowledgeGraphs
 			.stream()
 			.flatMap(knowledgeGraph -> knowledgeGraph.getShopping_results().stream())
