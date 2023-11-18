@@ -154,7 +154,7 @@ function FinalAuction({
     };
 
     addAuction(data).then((auction) => {
-      router.push("/");
+      router.push("/auctions");
     });
   };
 

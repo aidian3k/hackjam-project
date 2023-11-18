@@ -30,17 +30,16 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    setInterval(() => setRefresh(!refresh), 1000);
+    const intervalId = setInterval(() => setRefresh(!refresh), 1000);
     getAuctionById(params.id).then((response) => setAuctionDetails(response));
+    return () => clearInterval(intervalId);
   }, [refresh]);
 
   return (
     <Container component={"main"}>
       <Grid container spacing={2} pt={4} pb={4}>
         <Grid item xs={3}>
-          {auctionDetails && <ProductInfo
-              auction={auctionDetails}
-          />}
+          {auctionDetails && <ProductInfo auction={auctionDetails} />}
         </Grid>
         <Grid item xs={6}>
           <PersonaLiveComponent />
@@ -52,7 +51,8 @@ export default function AuctionDetails({ params }: { params: { id: number } }) {
               numberOfBidders={auctionDetails.bidAuctionInfo.numberOfBidders}
               topBidders={bidders}
               endDate={new Date("2023-12-20T12:01:04.753Z")}
-            />)}
+            />
+          )}
         </Grid>
       </Grid>
       <BidInput />
