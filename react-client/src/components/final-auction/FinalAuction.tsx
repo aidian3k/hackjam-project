@@ -99,7 +99,7 @@ function FinalAuction({
   media,
 }: {
   auctionDetails: AuctionDetailsDto | null;
-  media: MediaDto;
+  media: MediaDto | null;
 }) {
   const router = useRouter();
   const outerTheme = useTheme();
@@ -143,7 +143,7 @@ function FinalAuction({
 
   const handleAddAuction = () => {
     if (!auctionDetails) return;
-    if (!startDate || !endDate || !localization) return;
+    if (!startDate || !endDate || !localization || !media) return;
     const data: AuctionCreationDto = {
       auctionCoreInformation: auctionDetails.auctionCoreInformation,
       tags: tags.map((tag) => ({ name: tag } as TagDto)),
@@ -159,7 +159,7 @@ function FinalAuction({
   };
 
   const handleRemoveAuction = () => {
-    router.push("/");
+    router.push("/auctions");
   };
 
   useEffect(() => {

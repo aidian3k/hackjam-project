@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuctionCreationDto, AuctionDetailsDto, AuctionDto, MediaDto } from '@/types/auctionTypes';
+import { AuctionCreationDto, AuctionDetailsDto, AuctionDto, MainPageAuctionDto, MediaDto } from '@/types/auctionTypes';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -16,4 +16,8 @@ async function addAuction(auctionCreationDto: AuctionCreationDto) {
   return await axios.post<AuctionDto>(`${baseUrl}/api/auction/${defaultUserId}`, auctionCreationDto).then(response => response.data);
 }
 
-export { saveImage, generateAuctionDetails, addAuction };
+async function getAuctionById(id: number) {
+  return await axios.get<MainPageAuctionDto>(`${baseUrl}/api/auction/${id}`).then(response => response.data);
+}
+
+export { saveImage, generateAuctionDetails, addAuction, getAuctionById };
