@@ -38,7 +38,7 @@ export default function AddAuction() {
           setAuctionDetails={setAuctionDetails}
           setMedia={setMedia}
         />
-        <FinalAuction auctionDetails={auctionDetails} />
+        <FinalAuction media={media} auctionDetails={auctionDetails} />
       </LocalizationProvider>
     </Container>
   );

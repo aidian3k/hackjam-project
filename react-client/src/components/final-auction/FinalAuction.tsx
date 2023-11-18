@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
@@ -12,9 +12,19 @@ import {
   useTheme,
 } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import { Chip } from "@mui/material";
-import { AuctionDetailsDto } from "@/types/auctionTypes";
+import { Chip, InputAdornment } from "@mui/material";
+import {
+  AuctionCreationDto,
+  AuctionDetailsDto,
+  MediaDto,
+  TagDto,
+} from "@/types/auctionTypes";
 import Typography from "@mui/material/Typography";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { addAuction } from "@/services/auction-service";
+import { useRouter } from "next/navigation";
 
 const customTheme = (outerTheme: Theme) =>
   createTheme({
@@ -86,12 +96,18 @@ const customTheme = (outerTheme: Theme) =>
 
 function FinalAuction({
   auctionDetails,
+  media,
 }: {
   auctionDetails: AuctionDetailsDto | null;
+  media: MediaDto;
 }) {
+  const router = useRouter();
   const outerTheme = useTheme();
-  const [price, setPrice] = useState(
+  const [price, setPrice] = useState<string>(
     auctionDetails ? auctionDetails.auctionCoreInformation.price.toString() : ""
+  );
+  const [title, setTitle] = useState(
+    auctionDetails ? auctionDetails.auctionCoreInformation.title : ""
   );
   const [description, setDescription] = useState(
     auctionDetails ? auctionDetails.auctionCoreInformation.description : ""
@@ -100,6 +116,21 @@ function FinalAuction({
     auctionDetails ? auctionDetails.tagNames : []
   );
   const [tagInput, setTagInput] = useState("");
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [localization, setLocalization] = useState<string>("");
+
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    setEndDate(date);
+  };
+
+  const handleLocalizationChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setLocalization(event.target.value);
+  };
 
   const handleAddTag = () => {
     if (tagInput.length === 0) return;
@@ -110,9 +141,31 @@ function FinalAuction({
     setTags(tags.filter((t) => t !== tag));
   };
 
+  const handleAddAuction = () => {
+    if (!auctionDetails) return;
+    if (!startDate || !endDate || !localization) return;
+    const data: AuctionCreationDto = {
+      auctionCoreInformation: auctionDetails.auctionCoreInformation,
+      tags: tags.map((tag) => ({ name: tag } as TagDto)),
+      localization: localization,
+      startDate: startDate,
+      endDate: endDate,
+      media: media,
+    };
+
+    addAuction(data).then((auction) => {
+      router.push("/");
+    });
+  };
+
+  const handleRemoveAuction = () => {
+    router.push("/");
+  };
+
   useEffect(() => {
     if (!auctionDetails) return;
     setPrice(auctionDetails.auctionCoreInformation.price.toString());
+    setTitle(auctionDetails.auctionCoreInformation.title);
     setDescription(auctionDetails.auctionCoreInformation.description);
     setTags(auctionDetails.tagNames);
   }, [auctionDetails]);
@@ -121,12 +174,53 @@ function FinalAuction({
     <Box mt={2}>
       <ThemeProvider theme={customTheme(outerTheme)}>
         <Box display={"flex"} flexDirection={"column"} gap={2}>
+          <Box display={"flex"} width={"100%"} gap={1}>
+            <DesktopDateTimePicker
+              sx={{ width: "100%" }}
+              label={"Start date"}
+              value={startDate}
+              onChange={handleStartDateChange}
+            />
+            <DesktopDateTimePicker
+              sx={{ width: "100%" }}
+              label={"End date"}
+              value={endDate}
+              onChange={handleEndDateChange}
+            />
+          </Box>
+          <TextField
+            label="Localization"
+            type="text"
+            value={localization}
+            onChange={handleLocalizationChange}
+            className="mb-4"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LocationOnIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
           <TextField
             fullWidth
             label="Price"
             value={price}
             type={"number"}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AttachMoneyIcon />
+                </InputAdornment>
+              ),
+            }}
             onChange={(e) => setPrice(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             multiline
@@ -170,6 +264,7 @@ function FinalAuction({
                 backgroundColor: "#4FA3A1",
               },
             }}
+            onClick={() => handleAddAuction()}
           >
             Add auction
           </Button>
@@ -183,6 +278,7 @@ function FinalAuction({
                 color: "#4FA3A1",
               },
             }}
+            onClick={() => handleRemoveAuction()}
           >
             Decline auction
           </Button>

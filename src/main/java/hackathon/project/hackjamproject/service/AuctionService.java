@@ -15,7 +15,6 @@ import hackathon.project.hackjamproject.helpers.googlelens.GoogleResponse;
 import hackathon.project.hackjamproject.helpers.openai.OpenAiService;
 import hackathon.project.hackjamproject.helpers.openai.dtos.ArtificialIntelligenceResponse;
 import hackathon.project.hackjamproject.repository.AuctionRepository;
-
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -61,7 +60,7 @@ public class AuctionService {
 			.owner(user)
 			.endDate(auctionCreationDTO.getEndDate())
 			.startDate(auctionCreationDTO.getStartDate())
-			.media(auctionCreationDTO.getMedia())
+			//.media(auctionCreationDTO.getMedia())
 			.tags(tags)
 			.build();
 
@@ -74,48 +73,54 @@ public class AuctionService {
 		Auction auction = findAuctionById(auctionId);
 
 		return MainPageAuctionDTO
-				.builder()
-				.imageUrl(auction.getMedia().getImageUrl())
-				.title(auction.getAuctionCoreInformation().getTitle())
-				.description(auction.getAuctionCoreInformation().getDescription())
-				.timeLeft(getAuctionTimeLeft(auction.getEndDate()))
-				.bidAuctionInfo(getBidAuctionInfo(auction))
-				.build();
+			.builder()
+			.imageUrl(auction.getMedia().getImageUrl())
+			.title(auction.getAuctionCoreInformation().getTitle())
+			.description(auction.getAuctionCoreInformation().getDescription())
+			.timeLeft(getAuctionTimeLeft(auction.getEndDate()))
+			.bidAuctionInfo(getBidAuctionInfo(auction))
+			.build();
 	}
 
 	private BidAuctionInfo getBidAuctionInfo(Auction auction) {
-		List<Bid> bids =auction.getBids();
+		List<Bid> bids = auction.getBids();
 		int numberOfBidders = bids.size();
 		int maximumNumberOfMaxBidders = 6;
-		List<UserAuctionDTO> topBidders = bids.stream()
-				.sorted(Comparator.comparing(Bid::getBidPrice))
-				.map(bid -> userService.getUserInfoForAuction(bid.getUser().getId(), bid.getBidPrice()))
-				.limit(maximumNumberOfMaxBidders)
-				.toList();
+		List<UserAuctionDTO> topBidders = bids
+			.stream()
+			.sorted(Comparator.comparing(Bid::getBidPrice))
+			.map(bid ->
+				userService.getUserInfoForAuction(
+					bid.getUser().getId(),
+					bid.getBidPrice()
+				)
+			)
+			.limit(maximumNumberOfMaxBidders)
+			.toList();
 		Long highestBid;
 
-		if(topBidders.get(0) == null) {
+		if (topBidders.get(0) == null) {
 			highestBid = auction.getAuctionCoreInformation().getPrice();
 		} else {
 			highestBid = topBidders.get(0).getBidPrice();
 		}
 
 		return BidAuctionInfo
-				.builder()
-				.numberOfBidders(numberOfBidders)
-				.highestBid(highestBid)
-				.topBiddersInfo(topBidders)
-				.build();
+			.builder()
+			.numberOfBidders(numberOfBidders)
+			.highestBid(highestBid)
+			.topBiddersInfo(topBidders)
+			.build();
 	}
 
 	private TimeLeft getAuctionTimeLeft(LocalDateTime endTime) {
 		Duration duration = Duration.between(LocalDateTime.now(clock), endTime);
 		return TimeLeft
-				.builder()
-				.days(duration.toDays())
-				.hours(duration.toHours() % 24)
-				.minutes(duration.toMinutes() % 60)
-				.seconds(duration.toSeconds() % 60)
-				.build();
+			.builder()
+			.days(duration.toDays())
+			.hours(duration.toHours() % 24)
+			.minutes(duration.toMinutes() % 60)
+			.seconds(duration.toSeconds() % 60)
+			.build();
 	}
 }

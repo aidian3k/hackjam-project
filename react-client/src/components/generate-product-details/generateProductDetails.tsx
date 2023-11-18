@@ -1,15 +1,12 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { generateAuctionDetails, saveImage } from "@/services/auction-service";
-import { Box, Button, InputAdornment, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { MuiFileInput } from "mui-file-input";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Image from "next/image";
-import { MediaDto } from "@/types/auctionTypes";
 
 export default function GenerateProductDetails({
   setMedia,
@@ -19,25 +16,10 @@ export default function GenerateProductDetails({
   setAuctionDetails: any;
 }) {
   const [file, setFile] = useState<File | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [localization, setLocalization] = useState<string>("");
 
   const handleChange = (newFile: File | null) => {
     if (!newFile) return;
     setFile(newFile);
-  };
-
-  const handleStartDateChange = (date: Date | null) => {
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date: Date | null) => {
-    setEndDate(date);
-  };
-
-  const handleLocalizationChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setLocalization(event.target.value);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -82,34 +64,6 @@ export default function GenerateProductDetails({
           )}
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
-          <Box display={"flex"} width={"100%"} gap={1}>
-            <DesktopDateTimePicker
-              sx={{ width: "100%" }}
-              label={"Start date"}
-              value={startDate}
-              onChange={handleStartDateChange}
-            />
-            <DesktopDateTimePicker
-              sx={{ width: "100%" }}
-              label={"End date"}
-              value={endDate}
-              onChange={handleEndDateChange}
-            />
-          </Box>
-          <TextField
-            label="Localization"
-            type="text"
-            value={localization}
-            onChange={handleLocalizationChange}
-            className="mb-4"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LocationOnIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Typography variant={"body2"} sx={{ color: "grey" }}>
             Please click button below to auto generate content based on the
             photo given above.
