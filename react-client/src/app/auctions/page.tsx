@@ -63,17 +63,26 @@ export default function Auctions() {
 
     }, []);
 
+    const handleAuctionCardClick = (auctionId: number) => {
+        // Handle the "use client" functionality here
+        console.log(`Auction card clicked with ID: ${auctionId}`);
+        // Add your logic for "use client" here
+    };
+
+
     return (
         <Container component={"main"} sx={{ pt: 4 }}  >
             <div className={"grid grid-cols-2 gap-y-3 gap-x-8"}>
                 {auctions?.map((auction, index) => (
-                <AuctionCard
-                    key={index}
-                    title={auction.title}
-                    description={auction.description}
-                    imgUrl={auction.imageUrl}
-                    tags={auction.tags}
-                />
+                    <div className="copy_btn" onClick={() => handleAuctionCardClick(auction.id)}>
+                        <AuctionCard
+                            key={index}
+                            title={auction.title}
+                            description={auction.description}
+                            imgUrl={auction.imageUrl}
+                            tags={auction.tags}
+                        />
+                    </div>
                 ))}
             </div>
         </Container>
