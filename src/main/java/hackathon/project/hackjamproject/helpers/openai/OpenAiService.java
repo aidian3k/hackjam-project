@@ -105,7 +105,7 @@ public class OpenAiService {
 			.auctionCoreInformation(
 				AuctionCoreInformation
 					.builder()
-						.title(googleResponse.getTitle())
+					.title(googleResponse.getTitle())
 					.description(openAiResponse.getDescription())
 					.price(googleResponse.getPrice())
 					.build()

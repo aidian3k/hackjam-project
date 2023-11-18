@@ -12,8 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class TimeLeft {
-    private long days;
-    private long hours;
-    private long minutes;
-    private long seconds;
+
+	private long days;
+	private long hours;
+	private long minutes;
+	private long seconds;
 }

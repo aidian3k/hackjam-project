@@ -32,6 +32,8 @@ public class AuctionService {
 	private final TagService tagService;
 	private final AuctionRepository auctionRepository;
 	private final UserService userService;
+	private final GoogleLensService googleLensService;
+	private final OpenAiService openAiService;
 	private final Clock clock;
 
 	public Auction findAuctionById(Long auctionId) {
@@ -60,13 +62,24 @@ public class AuctionService {
 			.owner(user)
 			.endDate(auctionCreationDTO.getEndDate())
 			.startDate(auctionCreationDTO.getStartDate())
-			//.media(auctionCreationDTO.getMedia())
+			.media(auctionCreationDTO.getMedia())
 			.tags(tags)
 			.build();
 
-		Auction savedAuction = auctionRepository.save(auction);
+		auctionRepository.save(auction);
+		user.getAuctions().add(auction);
+		userService.updateCurrentUser(user);
 
-		return savedAuction;
+		return auction;
+	}
+
+	public ArtificialIntelligenceResponse getAuctionCoreInformationUsingPhoto(
+		Media media
+	) {
+		GoogleResponse googleResponse = googleLensService.getTitleAndAverageProductPrice(
+			media
+		);
+		return openAiService.getAuctionCoreInformation(googleResponse);
 	}
 
 	public MainPageAuctionDTO getMainPageAuctionDTO(Long auctionId) {
@@ -80,6 +93,14 @@ public class AuctionService {
 			.timeLeft(getAuctionTimeLeft(auction.getEndDate()))
 			.bidAuctionInfo(getBidAuctionInfo(auction))
 			.build();
+	}
+
+	public List<MainPageAuctionDTO> getAllAuctions() {
+		return auctionRepository
+				.findAll()
+				.stream()
+				.map(auction -> getMainPageAuctionDTO(auction.getId()))
+				.toList();
 	}
 
 	private BidAuctionInfo getBidAuctionInfo(Auction auction) {
@@ -123,4 +144,5 @@ public class AuctionService {
 			.seconds(duration.toSeconds() % 60)
 			.build();
 	}
+
 }

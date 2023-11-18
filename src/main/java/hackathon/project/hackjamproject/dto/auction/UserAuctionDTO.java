@@ -13,7 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserAuctionDTO {
-    private String name;
-    private String surname;
-    private Long bidPrice;
+
+	private String name;
+	private String surname;
+	private Long bidPrice;
 }

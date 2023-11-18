@@ -40,7 +40,10 @@ public class ImageService {
 		return mediaRepository.save(
 			Media
 				.builder()
-				.imageUrl("https://aidian3k-bucket-test.s3.amazonaws.com/" + multipartFile.getOriginalFilename())
+				.imageUrl(
+					"https://aidian3k-bucket-test.s3.amazonaws.com/" +
+					multipartFile.getOriginalFilename()
+				)
 				.extension(fileExtension)
 				.build()
 		);

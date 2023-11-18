@@ -1,14 +1,12 @@
 package hackathon.project.hackjamproject.dto.auction;
 
-
 import com.azure.core.annotation.Get;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,10 +14,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class MainPageAuctionDTO {
-    private String imageUrl;
-    private String title;
-    private String description;
-    private TimeLeft timeLeft;
-    private int biggestBid;
-    private BidAuctionInfo bidAuctionInfo;
+
+	private String imageUrl;
+	private String title;
+	private String description;
+	private TimeLeft timeLeft;
+	private int biggestBid;
+	private BidAuctionInfo bidAuctionInfo;
 }
