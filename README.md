@@ -25,6 +25,6 @@ We also used some artificial intelligence stuff when creating the application - 
 
 # Product photos
 In 24 hours we managed to create a running application - the application looks as shown below:
-![371541682_2395158100691202_8151399249352359352_n](https://github.com/aidian3k/hackjam-project/assets/93425971/ee92b617-6a7f-45a8-9917-a19a0ebeca6c)
-![368024747_217221831398224_7134018309139691666_n](https://github.com/aidian3k/hackjam-project/assets/93425971/f7c50d72-cbf5-4c23-b569-d607a5e9bf99)
-![371510702_1404930456902489_3321658126277935952_n](https://github.com/aidian3k/hackjam-project/assets/93425971/0b29ce18-a59b-4386-b380-beb9d085b486)
+![387490113_214058194974228_23328305199343069_n](https://github.com/aidian3k/hackjam-project/assets/93425971/add00137-e134-4db4-b64a-445b10716113)
+![368024747_217221831398224_7134018309139691666_n](https://github.com/aidian3k/hackjam-project/assets/93425971/92f649e4-b8ab-4a2c-a1da-ee66f1b18919)
+![371510702_1404930456902489_3321658126277935952_n](https://github.com/aidian3k/hackjam-project/assets/93425971/027e51d6-b550-4094-ace7-f6e4b117e050)
