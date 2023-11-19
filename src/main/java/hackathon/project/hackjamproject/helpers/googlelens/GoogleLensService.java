@@ -7,6 +7,7 @@ import hackathon.project.hackjamproject.helpers.googlelens.dtos.ShoppingResult;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,14 +16,16 @@ import org.springframework.stereotype.Service;
 public class GoogleLensService {
 
 	private final GoogleLensConnector googleLensConnector;
-	private static final String GOOGLE_API_KEY = "UgXWw3s4tcnQPKpemrhXh3G7";
+
+	@Value("${app.api.key.google-lens}")
+	private String googleLensApiKey;
 
 	public GoogleResponse getTitleAndAverageProductPrice(Media media) {
 		GoogleLensRootResponse googleLensRootResponse = googleLensConnector.getGoogleLensResponseFromImage(
 			"google_lens",
 			"pl",
 			media.getImageUrl(),
-			GOOGLE_API_KEY
+			googleLensApiKey
 		);
 		String mediaTitle = googleLensRootResponse
 			.getKnowledge_graphs()

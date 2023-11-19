@@ -1,1 +1,7 @@
-`
+app:
+  api:
+    key:
+      open-ai: '${OPEN_AI_KEY}'
+      google-lens: '${GOOGLE-LENS-KEY}'
+      aws-access-key: '${AWS-ACCESS-KEY}'
+      aws-secret-key-access: '${AWS-SECRET-KEY-ACCESS}'

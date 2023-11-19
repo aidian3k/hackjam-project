@@ -6,19 +6,23 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.polly.AmazonPolly;
 import com.amazonaws.services.polly.AmazonPollyClientBuilder;
 import com.amazonaws.services.polly.model.SynthesizeSpeechRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PollyConfiguration {
-    private static final String AWS_ACCESS_KEY = "AKIATHQ6EE6XHWPL5KFG";
-    private static final String AWS_SECRET_ACCESS_KEY =
-            "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";
+    @Value("${app.api.key.aws-access-key}")
+    private String awsAccessKey;
+
+    @Value("${app.api.key.aws-secret-key-access}")
+    private String awsSecretAccessKey;
+
     @Bean
     public AmazonPolly amazonPolly() {
         return AmazonPollyClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY)))
+                        new BasicAWSCredentials(awsAccessKey, awsSecretAccessKey)))
                 .withRegion(Regions.EU_WEST_1).build();
     }
 
